@@ -1,3 +1,5 @@
+const screenWidth = window.screen.width;
+
 const wrapper = document.createElement('div');
 const navigation = document.createElement('div');
 const titleBlock = document.createElement('div');
@@ -9,6 +11,8 @@ const editIcon = document.createElement('i');
 const deleteIcon = document.createElement('i');
 const title = document.createElement('span');
 const body = document.body;
+const createTaskBlock = document.createElement('div');
+const formBlock = document.createElement('div');
 const form = document.createElement('form');
 const input = document.createElement('input');
 
@@ -24,13 +28,39 @@ titleBlock.appendChild(deleteIconBlock);
 navigation.appendChild(titleBlock);
 
 form.appendChild(input);
+formBlock.appendChild(form);
+createTaskBlock.appendChild(formBlock);
 
 wrapper.appendChild(navigation);
-//wrapper.appendChild(form);
+wrapper.appendChild(createTaskBlock);
 
 body.appendChild(wrapper);
 
-wrapper.style.width = '80%';
+window.addEventListener('resize', function() {
+  const screenWidth = window.screen.width
+  if (screenWidth >= 1100)
+  {
+    wrapper.style.width = '65%';
+  } else
+  if (screenWidth > 500 && screenWidth < 1100) {
+               wrapper.style.width = '85%';
+             } else
+  if (screenWidth <= 500) {
+    wrapper.style.width = '100%';
+  }
+})
+
+if (screenWidth >= 1100)
+{
+  wrapper.style.width = '65%';
+} else
+if (screenWidth > 500 && screenWidth < 1100) {
+             wrapper.style.width = '85%';
+           } else
+if (screenWidth <= 500) {
+  wrapper.style.width = '100%';
+}
+
 wrapper.style.height= '300px';
 wrapper.style.margin = '0 auto';
 wrapper.classList.add('wrapper');
@@ -38,10 +68,17 @@ wrapper.classList.add('wrapper');
 navigation.style.width = '100%';
 navigation.style.minHeight = '40px';
 navigation.style.height = '40px';
-navigation.style.backgroundColor = 'rgb(57,98,162)';
-navigation.style.borderRadius = '6px 6px';
+navigation.style.background = 'linear-gradient(to bottom, rgb(76,134,184), rgb(49,85,137))';
+navigation.style.border = '1px solid rgb(49,85,137)';
 navigation.classList.add('navigation');
-navigation.style.boxShadow = 'inset 0 0 10px 1px #444';
+navigation.addEventListener('mouseenter', function() {
+  editIconBlock.style.opacity = '1';
+  deleteIconBlock.style.opacity = '1';
+});
+navigation.addEventListener('mouseleave', function() {
+  editIconBlock.style.opacity = '0';
+  deleteIconBlock.style.opacity = '0';
+});
 
 titleBlock.style.height = '100%';
 titleBlock.classList.add('titleBlock');
@@ -64,38 +101,39 @@ title.style.wordBreak = 'break-word';
 title.style.color = '#fff';
 title.style.fontSize = '20px';
 title.style.fontFamily = 'Tahoma';
-title.style.padding = '7px 5px';
+title.style.padding = '7px 0';
+title.style.margin = '0 5px';
 title.style.textShadow = '0 0 2px #000';
 title.classList.add('title');
 
 editIconBlock.style.height = '100%';
-editIconBlock.style.minWidth = '20px';
-editIconBlock.style.fontSize = '20px';
+editIconBlock.style.minWidth = '27px';
+editIconBlock.style.fontSize = '15px';
+editIconBlock.style.marginRight = '11px'
+editIconBlock.style.opacity = '0';
 editIconBlock.classList.add('editIconBlock');
 
 deleteIconBlock.style.height = '100%';
 deleteIconBlock.style.minWidth = '17.5px';
-deleteIconBlock.style.fontSize = '20px';
+deleteIconBlock.style.fontSize = '15px';
+deleteIconBlock.style.marginRight = '11px';
+deleteIconBlock.style.opacity = '0';
 deleteIconBlock.classList.add('deleteIconBlock');
 
 editIcon.className = 'fas fa-pencil-alt fa-ms';
-editIcon.style.marginTop = '10px';
+editIcon.style.marginTop = '12.5px';
 editIcon.style.color = '#ddd';
-editIcon.style.marginRight = '15px';
+//editIcon.style.marginRight = '4px';
+editIcon.style.paddingRight = '11px';
+editIcon.style.borderRight = '1px solid rgba(212, 213, 201, .6)'
 
 deleteIcon.className = 'far fa-trash-alt fa-msg';
-deleteIcon.style.marginTop = '10px';
+deleteIcon.style.marginTop = '12.5px';
 deleteIcon.style.color = '#ddd';
-deleteIcon.style.marginRight = '15px';
 
-form.style.padding = '15px';
-form.style.paddingLeft = '150px';
-form.style.height = '70px';
-form.classList.add('form');
-
-input.style.height = '80%';
-input.style.width = '90%';
-input.style.border = '3px solid #777';
-input.style.boxSizing = 'border-box';
-input.style.margin = "0 auto";
-input.classList.add('input');
+createTaskBlock.style.minHeight = '40px';
+createTaskBlock.style.height = '40px';
+createTaskBlock.style.width = '100%';
+createTaskBlock.style.background = 'linear-gradient(to bottom, rgb(224,224,224), rgb(211,211,211))';
+createTaskBlock.style.border = '1px solid rgb(170,170,170)';
+createTaskBlock.style.borderTop = 'none';
