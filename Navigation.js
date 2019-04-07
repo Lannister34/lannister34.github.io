@@ -4,7 +4,7 @@
   const addButton = document.querySelector('.add-todo');
   const clientHeight = document.documentElement.clientHeight;
 
-  body.style.minHeight = clientHeight + 'px';
+  body.style.minHeight = clientHeight - 20 + 'px';
 
   addButton.addEventListener('click', function() {
     const todo = new addTodo();
@@ -33,7 +33,6 @@
 
     const tasksBlock = document.createElement('div');
     const alertBox = document.createElement('div');
-
 
     calendarIconBlock.appendChild(calendarIcon);
     editIconBlock.appendChild(editIcon);

@@ -1,10 +1,11 @@
 body {
   margin: 0;
   padding: 0;
+  box-sizing: content-box;
   background: linear-gradient(to bottom, rgb(212,181,79), rgb(192,103,12)) no-repeat;
 }
 
-.clearfix {
+.clearfix::after {
   display: table;
   content: "";
   clear:both;
@@ -25,6 +26,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 .add-todo span {
