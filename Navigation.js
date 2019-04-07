@@ -9,7 +9,45 @@
   addButton.addEventListener('click', function() {
     const todo = new addTodo();
     todoList.appendChild(todo);
+
+    const title = document.createElement('span');
+    title.classList.add('title');
+
+    const todos = document.querySelectorAll('.wrapper');
+
+    const thisTodo = todos[todos.length-1];
+    const todoTitles = thisTodo.querySelectorAll('.inputTitle');
+    const thisTodoTitle = todoTitles[todoTitles.length-1];
+
+    const titleBlocks = thisTodo.querySelectorAll('.titleBlock');
+    const titleBlock = titleBlocks[titleBlocks.length-1];
+
+    const editIcons = thisTodo.querySelectorAll('.editIconBlock');
+    const editIcon = editIcons[editIcons.length-1];
+
+    thisTodoTitle.focus();
+
+    thisTodoTitle.addEventListener('keyup', function(evt) {
+      if (evt.keyCode == 13) {
+        thisTodoTitle.blur();
+      }
+    });
+
+    thisTodoTitle.addEventListener('blur', function() {
+      if (thisTodoTitle.value == '') {
+        title.textContent = 'Project #' + todos.length;
+      } else {
+        title.textContent = thisTodoTitle.value;
+      }
+      titleBlock.removeChild(thisTodoTitle);
+      titleBlock.insertBefore(title, editIcon);
+    });
+
   })
+
+  function setTitle(value) {
+
+  }
 
   function addTodo() {
     const wrapper = document.createElement('div');
@@ -21,7 +59,6 @@
     const calendarIcon = document.createElement('i');
     const editIcon = document.createElement('i');
     const deleteIcon = document.createElement('i');
-    const title = document.createElement('span');
 
     const createTaskBlock = document.createElement('div');
     const addIconBlock = document.createElement('div');
@@ -30,6 +67,7 @@
     const form = document.createElement('form');
     const input = document.createElement('input');
     const addTaskButton = document.createElement('button');
+    const inputTitle = document.createElement('input');
 
     const tasksBlock = document.createElement('div');
     const alertBox = document.createElement('div');
@@ -39,7 +77,7 @@
     deleteIconBlock.appendChild(deleteIcon);
 
     titleBlock.appendChild(calendarIconBlock);
-    titleBlock.appendChild(title);
+    titleBlock.appendChild(inputTitle);
     titleBlock.appendChild(editIconBlock);
     titleBlock.appendChild(deleteIconBlock);
 
@@ -65,7 +103,6 @@
     titleBlock.classList.add('titleBlock');
     calendarIconBlock.classList.add('calendarIconBlock');
     calendarIcon.className = 'calendarIcon far fa-calendar-alt fa-lg';
-    title.classList.add('title');
     editIconBlock.classList.add('editIconBlock');
     deleteIconBlock.classList.add('deleteIconBlock');
     editIcon.className = 'editIcon fas fa-pencil-alt fa-ms';
@@ -79,6 +116,7 @@
     addTaskButton.classList.add('addTaskButton');
     tasksBlock.classList.add('tasksBlock');
     alertBox.classList.add('alertBox');
+    inputTitle.classList.add('inputTitle');
 
     if ( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       editIconBlock.style.opacity = '0';
@@ -94,7 +132,9 @@
       });
     }
 
-    title.textContent = 'Title';
+
+    inputTitle.setAttribute('type', 'text');
+    inputTitle.setAttribute('placeholder', 'Input title...');
 
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'Start typing here to create a task...');
@@ -104,5 +144,6 @@
       evt.preventDefault();
     });
     alertBox.textContent = 'The are no tasks here.';
+
     return wrapper;
   }
