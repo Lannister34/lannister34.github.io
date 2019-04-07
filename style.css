@@ -59,9 +59,17 @@
   border-right: 1px solid rgba(212, 213, 201, .6);
 }
 
+.editIcon:hover {
+  color: #fff;
+}
+
 .deleteIcon {
   margin-top: 17.5px;
   color: #ddd;
+}
+
+.deleteIcon:hover {
+  color: #fff;
 }
 
 .createTaskBlock {
@@ -74,7 +82,7 @@
   background: linear-gradient(to bottom, rgb(224,224,224), rgb(211,211,211));
   border: 1px solid rgb(170,170,170);
   border-top: none;
-  box-sizing: border-border-box;
+  box-sizing: border-box;
 }
 
 .addIconBlock {
@@ -103,18 +111,24 @@
 
 .input {
   display: block;
-  height: 70%;
+  height: 28px;
   width: 100%;
   padding: 0;
   padding-left: 10px;
   border: none;
   border-top: 1px solid rgb(112, 112, 112);
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid rgb(112, 112, 112);
 }
 
 .addTaskButton {
   padding: 0;
   min-width: 100px;
-  height: 73%;
+  height: 28px;
   color: rgb(255, 255, 255);
   text-shadow: 0 1px 1px rgb(0, 0, 0);
   background: linear-gradient(to bottom, rgb(145, 200, 171), rgb(80,135,103));
@@ -122,6 +136,19 @@
   border-radius: 0 5px 5px 0;
 }
 
+.addTaskButton:hover {
+  background: linear-gradient(to bottom, rgb(121, 170, 144), rgb(65, 111, 84));
+  text-shadow: 0 1px 7px rgb(0, 0, 0);
+}
+
+.addTaskButton:active {
+  background: linear-gradient(to bottom, rgb(104, 148, 125), rgb(51, 88, 66));
+  text-shadow: 0 1px 7px rgb(0, 0, 0);
+}
+
+.addTaskButton:focus {
+  outline: none;
+}
 .tasksBlock {
   background-color: rgb(249, 250, 249);
   height: 120px;
@@ -134,7 +161,7 @@
   width: 100%;
   height: 100%;
   color: rgb(124, 126, 130);
-  font-size: 45px;
+  font-size: 35px;
   line-height: 120px;
   font-style: italic;
   text-align: center;
