@@ -1,9 +1,11 @@
 body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(to bottom, rgb(212,181,79), rgb(192,103,12)) no-repeat;
 }
 
 .add-todo {
+  margin-top: 20px;
   width: 150px;
   height: 40px;
   background: linear-gradient(to bottom, rgb(76,134,184), rgb(49,85,137));
@@ -16,6 +18,7 @@ body {
   text-shadow: 0 -1px 2px rgb(0, 0, 0);
   font-size: 14px;
   font-weight: bold;
+  margin-top: 40px;
 }
 
 .add-todo span {
@@ -46,6 +49,11 @@ body {
 
 .wrapper {
     width: 100%;
+    margin-bottom: 20px;
+}
+
+.wrapper:last-child {
+  margin-bottom: 0;
 }
 
 .navigation {
@@ -123,7 +131,7 @@ body {
 }
 
 .deleteIcon:active {
-  text-shadow: 0 0 1px #fff;  
+  text-shadow: 0 0 1px #fff;
 }
 
 .createTaskBlock {
