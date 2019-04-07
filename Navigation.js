@@ -34,7 +34,7 @@
     });
 
     thisTodoTitle.addEventListener('blur', function() {
-      if (thisTodoTitle.value == '') {
+      if (thisTodoTitle.value.replace(/\s/g,"") == '') {
         title.textContent = 'Project #' + todos.length;
       } else {
         title.textContent = thisTodoTitle.value;
