@@ -1,5 +1,6 @@
   const screenWidth = window.screen.width;
 
+const todoList = document.querySelector('.todo-list')
   const wrapper = document.createElement('div');
   const navigation = document.createElement('div');
   const titleBlock = document.createElement('div');
@@ -24,8 +25,7 @@
   const tasksBlock = document.createElement('div');
   const alertBox = document.createElement('div');
 
-  body.style.margin = '0';
-  body.style.padding = '0';
+  wrapper.style.marginBottom = '20px';
 
   calendarIconBlock.appendChild(calendarIcon);
   editIconBlock.appendChild(editIcon);
@@ -53,7 +53,7 @@
   wrapper.appendChild(createTaskBlock);
   wrapper.appendChild(tasksBlock);
 
-  body.appendChild(wrapper);
+  todoList.appendChild(wrapper);
 
   wrapper.classList.add('wrapper');
   navigation.classList.add('navigation');

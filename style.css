@@ -1,3 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.add-todo {
+  width: 150px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgb(76,134,184), rgb(49,85,137));
+  padding: 0;
+  border: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 -1px 2px rgb(0, 0, 0);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.add-todo span {
+  display: block;
+  height: 20px;
+  line-height: 20px;
+
+}
+
+.add-todo:focus {
+  outline: none;
+}
+
+.add-todo:hover {
+  background: linear-gradient(to bottom, rgb(67, 119, 163), rgb(41, 71, 115));
+}
+
+.add-todo:active {
+  background: linear-gradient(to bottom, rgb(58, 104, 143), rgb(33, 57, 93));
+}
+
+.plusIcon {
+  color: rgb(49,85,137);
+  text-shadow: 0 -1px 1px rgb(0, 0, 0);
+  font-size: 20px;
+  margin-right: 5px;
+}
+
 .wrapper {
     width: 100%;
 }
@@ -63,6 +109,10 @@
   color: #fff;
 }
 
+.editIcon:active {
+  text-shadow: 0 0 1px #fff;
+}
+
 .deleteIcon {
   margin-top: 17.5px;
   color: #ddd;
@@ -70,6 +120,10 @@
 
 .deleteIcon:hover {
   color: #fff;
+}
+
+.deleteIcon:active {
+  text-shadow: 0 0 1px #fff;  
 }
 
 .createTaskBlock {
