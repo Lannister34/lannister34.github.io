@@ -4,6 +4,12 @@ body {
   background: linear-gradient(to bottom, rgb(212,181,79), rgb(192,103,12)) no-repeat;
 }
 
+.clearfix {
+  display: table;
+  content: "";
+  clear:both;
+}
+
 .add-todo {
   margin-top: 20px;
   width: 150px;
