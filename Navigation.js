@@ -49,8 +49,8 @@
       if (thisTodoTitle.value.replace(/\s/g,"") == '') {
         if (title.textContent == '') {
           title.textContent = 'Project #' + todos.length;
-          thisTodoTitle.value = title.textContent;
         }
+        thisTodoTitle.value = title.textContent;
       } else {
         title.textContent = thisTodoTitle.value;
       }
