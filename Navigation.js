@@ -159,7 +159,7 @@
     }
 
     editIcon.addEventListener('click', function() {
-      const titleBlock = document.querySelectorAll('.titleBlock')[id-1];
+      const titleBlock = wrapper.querySelector('.titleBlock');
       const title = titleBlock.querySelector('.title');
       const titleValue = title.textContent;
 
@@ -170,7 +170,10 @@
     });
 
     deleteIcon.addEventListener('click', function() {
-
+      const title = wrapper.querySelector('.title').textContent;
+      if (confirm('Вы уверены, что хотите удалить проект ' + title + '?')) {
+        todoList.removeChild(wrapper);
+      }
     });
 
     inputTitle.setAttribute('type', 'text');
