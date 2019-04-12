@@ -294,21 +294,83 @@ body {
   font-weight: bold;
 }
 
+.toolsBlock {
+  display: flex;
+  border-left:1px solid rgba(145, 145, 145, 0.4);
+}
+
 .arrowsIconBlock {
-  margin-top: 17.5px;
-  font-size: 25px;
-  color: #888;
+  margin-top: 18.5px;
+  margin-right: 12.5px;
+  padding-right: 12.5px;
+  margin-left: 25px;
+  height: 27px;
+  border-right: 1px solid rgba(145, 145, 145, 0.7);
 }
 
 .arrowTop {
-  display: block;
-  font-size: inherit;
+  border: 10px solid transparent;
+  border-bottom-color: #888;
+  border-top-width: 1px;
+  width: 0;
+  height: 0;
 }
 
-.arrowTop::hover {}
+.arrowTop:hover {
+  border-bottom-color: rgb(64, 116, 161);
+}
+
+.arrowTop:active {
+  border-bottom-color: rgb(40, 69, 112);
+}
 
 .arrowDown {
-  display: block;
-  margin-top: -25px;
-  font-size: inherit;
+  border: 10px solid transparent;
+  border-top-color: #888;
+  border-bottom-width: 1px;
+  width: 0;
+  height: 0;
+  margin-top: 5px;
+}
+
+.arrowDown:hover {
+  border-top-color: rgb(64, 116, 161);
+}
+
+.arrowDown:active {
+  border-top-color: rgb(40, 69, 112);
+}
+
+.editIconBlock-task {
+  margin-top: 18.5px;
+  height: 27px;
+  font-size: 27px;
+  color: #888;
+  padding-right: 12.5px;
+  margin-right: 12.5px;
+  border-right: 1px solid rgba(145, 145, 145, 0.7);
+}
+
+.editIcon-task:hover {
+  color: rgb(64, 116, 161);
+}
+
+.editIcon-task:active {
+  color: rgb(40, 69, 112);
+}
+
+.deleteIconBlock-task {
+  margin-top: 18.5px;
+  margin-right: 35px;
+  height: 27px;
+  font-size: 27px;
+  color: #888;
+}
+
+.deleteIcon-task:hover {
+  color: rgb(64, 116, 161);
+}
+
+.deleteIcon-task:active {
+  color: rgb(40, 69, 112);
 }

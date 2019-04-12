@@ -10,9 +10,12 @@ const taskText = document.createElement('span');
 
 const toolsBlock = document.createElement('div');
 const arrowsIconBlock = document.createElement('div');
-const arrowTop = document.createElement('i');
-const arrowDown = document.createElement('i');
-
+const arrowTop = document.createElement('div');
+const arrowDown = document.createElement('div');
+const editIconBlock = document.createElement('div');
+const deleteIconBlock = document.createElement('div');
+const editIcon = document.createElement('i');
+const deleteIcon = document.createElement('i');
 
 clearfix.classList.add('clearfix');
 
@@ -31,8 +34,13 @@ taskText.classList.add('taskText');
 toolsBlock.className = 'toolsBlock';
 arrowsIconBlock.className = 'arrowsIconBlock';
 
-arrowTop.className = 'arrowTop fas fa-sort-up xs';
-arrowDown.className = 'arrowDown fas fa-sort-down xs';
+arrowTop.classList.add('arrowTop');
+arrowDown.classList.add('arrowDown');
+
+editIconBlock.classList.add('editIconBlock-task');
+deleteIconBlock.classList.add('deleteIconBlock-task');
+editIcon.className = 'editIcon-task fas fa-pencil-alt fa-ms';
+deleteIcon.className = 'deleteIcon-task far fa-trash-alt fa-ms';
 
 checkBoxBlock.appendChild(clearfix);
 checkBoxBlock.appendChild(checkBox);
@@ -42,7 +50,12 @@ taskTextBlock.appendChild(taskText);
 arrowsIconBlock.appendChild(arrowTop);
 arrowsIconBlock.appendChild(arrowDown);
 
+editIconBlock.appendChild(editIcon);
+deleteIconBlock.appendChild(deleteIcon);
+
 toolsBlock.appendChild(arrowsIconBlock);
+toolsBlock.appendChild(editIconBlock);
+toolsBlock.appendChild(deleteIconBlock);
 
 task.appendChild(checkBoxBlock);
 task.appendChild(taskTextBlock);
