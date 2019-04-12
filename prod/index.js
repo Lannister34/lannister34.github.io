@@ -61,132 +61,166 @@
 
   });
 
-  function toggleVisibilityIcons(thisNode) {
-      const editIcon = thisNode.querySelector('.editIcon');
-      const deleteIcon = thisNode.querySelector('.deleteIcon');
-      if (editIcon.style.visibility == 'hidden' && deleteIcon.style.visibility == 'hidden') {
-        editIcon.style.visibility = 'visible';
-        deleteIcon.style.visibility = 'visible';
-      } else {
-        editIcon.style.visibility = 'hidden';
-        deleteIcon.style.visibility = 'hidden';
-      }
-  }
+  const app = {
 
-  function addTodo() {
-    const id = count;
-    const wrapper = document.createElement('div');
-    const navigation = document.createElement('div');
-    const titleBlock = document.createElement('div');
-    const calendarIconBlock = document.createElement('div');
-    const editIconBlock = document.createElement('div');
-    const deleteIconBlock = document.createElement('div');
-    const calendarIcon = document.createElement('i');
-    const editIcon = document.createElement('i');
-    const deleteIcon = document.createElement('i');
-
-    const createTaskBlock = document.createElement('div');
-    const addIconBlock = document.createElement('div');
-    const addIcon = document.createElement('i');
-    const formBlock = document.createElement('div');
-    const form = document.createElement('form');
-    const input = document.createElement('input');
-    const addTaskButton = document.createElement('button');
-    const inputTitle = document.createElement('input');
-
-    const tasksBlock = document.createElement('div');
-    const alertBox = document.createElement('div');
-
-    calendarIconBlock.appendChild(calendarIcon);
-    editIconBlock.appendChild(editIcon);
-    deleteIconBlock.appendChild(deleteIcon);
-
-    titleBlock.appendChild(calendarIconBlock);
-    titleBlock.appendChild(inputTitle);
-    titleBlock.appendChild(editIconBlock);
-    titleBlock.appendChild(deleteIconBlock);
-
-    navigation.appendChild(titleBlock);
-
-    addIconBlock.appendChild(addIcon);
-
-    form.appendChild(input);
-    form.appendChild(addTaskButton);
-    formBlock.appendChild(form);
-
-    createTaskBlock.appendChild(addIconBlock);
-    createTaskBlock.appendChild(formBlock);
-
-    tasksBlock.appendChild(alertBox);
-
-    wrapper.appendChild(navigation);
-    wrapper.appendChild(createTaskBlock);
-    wrapper.appendChild(tasksBlock);
-
-    wrapper.classList.add('wrapper');
-    wrapper.setAttribute('id', id);
-    navigation.classList.add('navigation');
-    titleBlock.classList.add('titleBlock');
-    calendarIconBlock.classList.add('calendarIconBlock');
-    calendarIcon.className = 'calendarIcon far fa-calendar-alt fa-lg';
-    editIconBlock.classList.add('editIconBlock');
-    deleteIconBlock.classList.add('deleteIconBlock');
-    editIcon.className = 'editIcon fas fa-pencil-alt fa-ms';
-    deleteIcon.className = 'deleteIcon far fa-trash-alt fa-ms';
-    createTaskBlock.classList.add('createTaskBlock');
-    addIconBlock.classList.add('addIconBlock');
-    addIcon.className = 'addIcon fas fa-plus fa-msg';
-    formBlock.className = 'formBlock';
-    form.classList.add('form');
-    input.classList.add('input');
-    addTaskButton.classList.add('addTaskButton');
-    tasksBlock.classList.add('tasksBlock');
-    alertBox.classList.add('alertBox');
-    inputTitle.classList.add('inputTitle');
-
-    if ( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      editIconBlock.style.opacity = '0';
-      deleteIconBlock.style.opacity = '0';
-
-      navigation.addEventListener('mouseenter', function() {
-        editIconBlock.style.opacity = '1';
-        deleteIconBlock.style.opacity = '1';
-      });
-      navigation.addEventListener('mouseleave', function() {
-        editIconBlock.style.opacity = '0';
-        deleteIconBlock.style.opacity = '0';
-      });
+    toggleVisibilityIcons: function(thisNode) {
+        const editIcon = thisNode.querySelector('.editIcon');
+        const deleteIcon = thisNode.querySelector('.deleteIcon');
+        if (editIcon.style.visibility == 'hidden' && deleteIcon.style.visibility == 'hidden') {
+          editIcon.style.visibility = 'visible';
+          deleteIcon.style.visibility = 'visible';
+        } else {
+          editIcon.style.visibility = 'hidden';
+          deleteIcon.style.visibility = 'hidden';
+        }
     }
 
-    editIcon.addEventListener('click', function() {
-      const titleBlock = wrapper.querySelector('.titleBlock');
-      const title = titleBlock.querySelector('.title');
-      const titleValue = title.textContent;
-
-      titleBlock.removeChild(title);
-      toggleVisibilityIcons(titleBlock);
-      titleBlock.insertBefore(inputTitle, editIconBlock);
-      inputTitle.focus();
-    });
-
-    deleteIcon.addEventListener('click', function() {
-      const title = wrapper.querySelector('.title').textContent;
-      if (confirm('Вы уверены, что хотите удалить проект ' + title + '?')) {
-        todoList.removeChild(wrapper);
+    isEmpty: function(obj) {
+      for (var key in obj) {
+        return false;
       }
-    });
+      return true;
+      }
 
-    inputTitle.setAttribute('type', 'text');
-    inputTitle.setAttribute('placeholder', 'Input title...');
+    const addTodo = {
+      tasks: {},
+      id: count,
+      icons: [],
 
-    input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'Start typing here to create a task...');
+      create: function() {
+        return {
+          'wrapper': document.createElement('div');
+          'navigation': document.createElement('div');
+          'titleBlock': document.createElement('div');
+          'calendarIconBlock': document.createElement('div');
+          'editIconBlock': document.createElement('div');
+          'deleteIconBlock': document.createElement('div');
+          'calendarIcon': document.createElement('i');
+          'editIcon': document.createElement('i');
+          'deleteIcon': document.createElement('i');
 
-    addTaskButton.textContent = 'Add Task';
-    addTaskButton.addEventListener('click', function(evt) {
-      evt.preventDefault();
-    });
-    alertBox.textContent = 'The are no tasks here.';
+          'createTaskBlock': document.createElement('div');
+          'addIconBlock': document.createElement('div');
+          'addIcon': document.createElement('i');
+          'formBlock': document.createElement('div');
+          'form': document.createElement('form');
+          'input': document.createElement('input');
+          'addTaskButton': document.createElement('button');
+          'inputTitle': document.createElement('input');
 
-    return wrapper;
+          'taskList': document.createElement('div');
+          'alertBox': document.createElement('div');
+        }
+      },
+
+      setClass: function(obj) {
+          for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              obj[key].classList.add(key);
+            }
+          }
+      },
+
+      append: function(obj) {
+        obj['calendarIconBlock'].appendChild(obj['calendarIcon']);
+        obj['editIconBlock'].appendChild(obj['editIcon']);
+        obj['deleteIconBlock'].appendChild(obj['deleteIcon']);
+
+        obj['titleBlock'].appendChild(obj['calendarIconBlock']);
+        obj['titleBlock'].appendChild(obj['inputTitle']);
+        obj['titleBlock'].appendChild(obj['editIconBlock']);
+        obj['titleBlock'].appendChild(obj['deleteIconBlock']);
+
+        obj['navigation'].appendChild(obj['titleBlock']);
+
+        obj['addIconBlock'].appendChild(obj['addIcon']);
+
+        obj['form'].appendChild(obj['input']);
+        obj['form'].appendChild(obj['addTaskButton']);
+        obj['formBlock'].appendChild(obj['form']);
+
+        obj['createTaskBlock'].appendChild(obj['addIconBlock']);
+        obj['createTaskBlock'].appendChild(obj['formBlock']);
+
+        //taskList.appendChild(alertBox);
+
+        obj['wrapper'].appendChild(obj['navigation']);
+        obj['wrapper'].appendChild(obj['createTaskBlock']);
+        obj['wrapper'].appendChild(obj['taskList']);
+      }
+
+      setTextIcons: function(obj) {
+        obj['calendarIcon'].className = 'far fa-calendar-alt fa-lg';
+        obj['editIcon'].className = 'fas fa-pencil-alt fa-ms';
+        obj['deleteIcon'].className = 'far fa-trash-alt fa-ms';
+        obj['addIcon'].className = 'fas fa-plus fa-msg';
+      }
+
+      wrapper.classList.add('wrapper');
+      wrapper.setAttribute('id', id);
+      navigation.classList.add('navigation');
+      titleBlock.classList.add('titleBlock');
+      calendarIconBlock.classList.add('calendarIconBlock');
+      calendarIcon.className = 'calendarIcon far fa-calendar-alt fa-lg';
+      editIconBlock.classList.add('editIconBlock');
+      deleteIconBlock.classList.add('deleteIconBlock');
+      editIcon.className = 'editIcon fas fa-pencil-alt fa-ms';
+      deleteIcon.className = 'deleteIcon far fa-trash-alt fa-ms';
+      createTaskBlock.classList.add('createTaskBlock');
+      addIconBlock.classList.add('addIconBlock');
+      addIcon.className = 'addIcon fas fa-plus fa-msg';
+      formBlock.className = 'formBlock';
+      form.classList.add('form');
+      input.classList.add('input');
+      addTaskButton.classList.add('addTaskButton');
+      taskList.classList.add('taskList');
+      //alertBox.classList.add('alertBox');
+      inputTitle.classList.add('inputTitle');
+
+      if ( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        editIconBlock.style.opacity = '0';
+        deleteIconBlock.style.opacity = '0';
+
+        navigation.addEventListener('mouseenter', function() {
+          editIconBlock.style.opacity = '1';
+          deleteIconBlock.style.opacity = '1';
+        });
+        navigation.addEventListener('mouseleave', function() {
+          editIconBlock.style.opacity = '0';
+          deleteIconBlock.style.opacity = '0';
+        });
+      }
+
+      editIcon.addEventListener('click', function() {
+        const titleBlock = wrapper.querySelector('.titleBlock');
+        const title = titleBlock.querySelector('.title');
+        const titleValue = title.textContent;
+
+        titleBlock.removeChild(title);
+        toggleVisibilityIcons(titleBlock);
+        titleBlock.insertBefore(inputTitle, editIconBlock);
+        inputTitle.focus();
+      });
+
+      deleteIcon.addEventListener('click', function() {
+        const title = wrapper.querySelector('.title').textContent;
+        if (confirm('Вы уверены, что хотите удалить проект ' + title + '?')) {
+          todoList.removeChild(wrapper);
+        }
+      });
+
+      inputTitle.setAttribute('type', 'text');
+      inputTitle.setAttribute('placeholder', 'Input title...');
+
+      input.setAttribute('type', 'text');
+      input.setAttribute('placeholder', 'Start typing here to create a task...');
+
+      addTaskButton.textContent = 'Add Task';
+      addTaskButton.addEventListener('click', function(evt) {
+        evt.preventDefault();
+      });
+      //alertBox.textContent = 'The are no tasks here.';
+
+      return wrapper;
+    }
   }
