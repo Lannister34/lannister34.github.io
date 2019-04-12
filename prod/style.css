@@ -261,6 +261,10 @@ body {
   background: #fff;
 }
 
+.task:hover {
+  background: rgb(252, 254, 213);
+}
+
 .checkBoxBlock {
   height: 100%;
   width: 60px;
