@@ -322,7 +322,7 @@ body {
 
 .taskText-done {
   text-decoration: line-through;
-  color: rgba(3, 130, 54, 0.8);
+    color: rgba(3, 130, 54, 0.8);
 }
 
 .taskInput {
