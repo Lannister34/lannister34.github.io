@@ -1,4 +1,4 @@
-
+"use strict"
 
   const app = {
 
@@ -12,11 +12,13 @@
     setBackgroundSize: function() {
         const clientHeight = document.documentElement.clientHeight;
         document.body.style.minHeight = clientHeight - 20 + 'px';
-        this.addBackgroundResizeEvent(clientHeight);
+        this.addBackgroundResizeEvent();
     },
 
-    addBackgroundResizeEvent: function(clientHeight) {
-      window.addEventListener('resize', function(clientHeight) {
+    addBackgroundResizeEvent: function() {
+      window.addEventListener('resize', function() {
+        const clientHeight = document.documentElement.clientHeight;
+        console.log(clientHeight);
         document.body.style.minHeight = clientHeight - 20 + 'px';
 });
     },
