@@ -1,10 +1,8 @@
-  const screenWidth = window.screen.width;
-  const orientation = screen.msOrientation || screen.mozOrientation ||
-                      (screen.orientation || {}).type || window.orientation;
 
-  let count = 0;
 
   const app = {
+
+    count: 0,
 
     init: function() {
       this.setBackgroundSize();
@@ -28,7 +26,7 @@
       const todoList = document.querySelector('.todo-list');
 
       button.addEventListener('click', function() {
-        count++;
+        app.count++;
         const todo = app.addTodo.add();
         todoList.appendChild(todo);
         const title = app.title.createTitle(todo);
@@ -58,7 +56,7 @@
         input.addEventListener('blur', function() {
           if (input.value.replace(/\s/g,"") == '') {
             if (title.textContent == '') {
-              title.textContent = 'Project #' + count;
+              title.textContent = 'Project #' + app.count;
             }
             input.value = title.textContent;
           } else {
@@ -130,7 +128,7 @@
 
     addTodo: {
       tasks: {},
-      id: function() { return count; },
+      id: function() { return app.count; },
       add: function() {
         const items = app.addTodo.create();
         app.addTodo.setTextIcons(items);
