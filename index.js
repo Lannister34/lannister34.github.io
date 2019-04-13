@@ -4,7 +4,7 @@
 
     init: function() {
       this.setBackgroundSize();
-      this.addTodoCLickEvent();
+      this.addTodo.addTodoClickEvent();
     },
 
     setBackgroundSize: function() {
@@ -20,105 +20,11 @@
         const clientWidth = document.documentElement.clientWidth;
         document.body.style.minHeight = clientHeight - 20 + 'px';
         document.body.style.minWidth = clientWidth + 'px';
-});
-    },
-
-    addTodoCLickEvent: function() {
-      const button = document.querySelector('.add-todo');
-      const todoList = document.querySelector('.todo-list');
-
-      button.addEventListener('click', function() {
-        app.count++;
-        const todo = app.addTodo.add();
-        todoList.appendChild(todo);
-        const title = app.title.createTitle(todo);
-        const input = app.title.addEnterEvent(todo);
-        app.title.addBlurEvent(todo, title);
-        app.title.addEditEvent(todo, title, input);
-        app.addDeleteEvent(todo, todoList, title);
-      });
-    },
-
-    title: {
-      addEnterEvent: function(todo) {
-        const input = todo.querySelector('.inputTitle');
-        input.addEventListener('keyup', function(evt) {
-          if (evt.keyCode == 13) {
-            input.blur();
-          }
-        });
-        return input;
-      },
-
-      addBlurEvent: function(todo, title) {
-        const input = todo.querySelector('.inputTitle');
-        const titleBlock = todo.querySelector('.titleBlock');
-        const editIconBlock = todo.querySelector('.editIconBlock');
-
-        input.addEventListener('blur', function() {
-          if (input.value.replace(/\s/g,"") == '') {
-            if (title.textContent == '') {
-              title.textContent = 'Project #' + app.count;
-            }
-            input.value = title.textContent;
-          } else {
-            title.textContent = input.value;
-          }
-          titleBlock.removeChild(input);
-          titleBlock.insertBefore(title, editIconBlock);
-          app.toggleVisibilityIcons(titleBlock);
-        });
-      },
-
-      addEditEvent: function(todo, title, input) {
-        const editIcon = todo.querySelector('.editIcon');
-        const editIconBlock = todo.querySelector('.editIconBlock');
-        const titleBlock = todo.querySelector('.titleBlock');
-
-        editIcon.addEventListener('click', function() {
-          titleBlock.removeChild(title);
-          titleBlock.insertBefore(input, editIconBlock);
-          app.toggleVisibilityIcons(titleBlock);
-          input.focus();
-        });
-      },
-
-      createTitle: function(todo) {
-        const title = document.createElement('span');
-        const input = todo.querySelector('.inputTitle');
-        const titleBlock = todo.querySelector('.titleBlock');
-
-        title.classList.add('title');
-        app.toggleVisibilityIcons(titleBlock);
-        input.focus();
-        return title;
-      }
-    },
-
-    addDeleteEvent: function(todo, todoList, title) {
-      const deleteIcon = todo.querySelector('.deleteIcon');
-
-      deleteIcon.addEventListener('click', function() {
-        if (confirm('Вы уверены, что хотите удалить проект ' + title.textContent + '?')) {
-          todoList.removeChild(todo);
-        }
       });
     },
 
     isMobile: function() {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    },
-
-    toggleVisibilityIcons: function(thisNode) {
-        const editIcon = thisNode.querySelector('.editIcon');
-        const deleteIcon = thisNode.querySelector('.deleteIcon');
-        if (editIcon.style.visibility == 'hidden' && deleteIcon.style.visibility == 'hidden') {
-          editIcon.style.visibility = 'visible';
-          deleteIcon.style.visibility = 'visible';
-        } else {
-          editIcon.style.visibility = 'hidden';
-          deleteIcon.style.visibility = 'hidden';
-        }
     },
 
     isEmpty: function(obj) {
@@ -238,10 +144,112 @@
         }
       },
 
-      addMouseEvents: function(obj) {
-        const { navigation, editIcon, deleteIcon, addTaskButton,
-                editIconBlock, deleteIconBlock, titleBlock,
-                title, taskList } = obj;
+      addTodoClickEvent: function() {
+        const button = document.querySelector('.add-todo');
+        const todoList = document.querySelector('.todo-list');
+
+        button.addEventListener('click', function() {
+          app.count++;
+          const todo = app.addTodo.add();
+          button.style.visibility = 'hidden';
+          todoList.appendChild(todo);
+          const title = app.addTodo.title.createTitle(todo);
+          const input = app.addTodo.title.addEnterEvent(todo);
+          app.addTodo.title.addBlurEvent(todo, title);
+          app.addTodo.title.addEditEvent(todo, title, input);
+          app.addTodo.addDeleteEvent(todo, todoList, title);
+        });
+      },
+
+      title: {
+        addEnterEvent: function(todo) {
+          const input = todo.querySelector('.inputTitle');
+
+          input.addEventListener('keyup', function(evt) {
+            if (evt.keyCode == 13) {
+              input.blur();
+            }
+          });
+          return input;
+        },
+
+        addBlurEvent: function(todo, title) {
+          const input = todo.querySelector('.inputTitle');
+          const titleBlock = todo.querySelector('.titleBlock');
+          const editIconBlock = todo.querySelector('.editIconBlock');
+          const button = document.querySelector('.add-todo');
+
+          input.addEventListener('blur', function() {
+            if (input.value.replace(/\s/g,"") === '') {
+              if (title.textContent == '') {
+                input.classList.add('inputTitle-danger');
+                input.focus();
+                return;
+              }
+              input.value = title.textContent;
+            } else {
+              title.textContent = input.value;
+            }
+            try {
+              input.classList.remove('inputTitle-danger');
+            } catch(e) {}
+            titleBlock.removeChild(input);
+            titleBlock.insertBefore(title, editIconBlock);
+            app.addTodo.toggleVisibilityIcons(titleBlock);
+            button.style.visibility = 'visible';
+          });
+        },
+
+        addEditEvent: function(todo, title, input) {
+          const editIcon = todo.querySelector('.editIcon');
+          const editIconBlock = todo.querySelector('.editIconBlock');
+          const titleBlock = todo.querySelector('.titleBlock');
+
+          editIcon.addEventListener('click', function() {
+            titleBlock.removeChild(title);
+            titleBlock.insertBefore(input, editIconBlock);
+            app.addTodo.toggleVisibilityIcons(titleBlock);
+            input.focus();
+          });
+        },
+
+        createTitle: function(todo) {
+          const title = document.createElement('span');
+          const input = todo.querySelector('.inputTitle');
+          const titleBlock = todo.querySelector('.titleBlock');
+
+          title.classList.add('title');
+          app.addTodo.toggleVisibilityIcons(titleBlock);
+          input.focus();
+          return title;
+        }
+      },
+
+      addDeleteEvent: function(todo, todoList, title) {
+        const deleteIcon = todo.querySelector('.deleteIcon');
+
+        deleteIcon.addEventListener('click', function() {
+          if (confirm('Вы уверены, что хотите удалить проект ' + title.textContent + '?')) {
+            todoList.removeChild(todo);
+          }
+        });
+      },
+
+      toggleVisibilityIcons: function(todo) {
+          const editIcon = todo.querySelector('.editIcon');
+          const deleteIcon = todo.querySelector('.deleteIcon');
+          if (editIcon.style.visibility == 'hidden' && deleteIcon.style.visibility == 'hidden') {
+            editIcon.style.visibility = 'visible';
+            deleteIcon.style.visibility = 'visible';
+          } else {
+            editIcon.style.visibility = 'hidden';
+            deleteIcon.style.visibility = 'hidden';
+          }
+      },
+
+      addMouseEvents: function(todo) {
+        const { navigation, addTaskButton,
+                editIconBlock, deleteIconBlock, taskList, input } = todo;
 
         navigation.addEventListener('mouseenter', function() {
           editIconBlock.style.opacity = '1';
@@ -253,25 +261,38 @@
         });
 
         addTaskButton.addEventListener('click', function(evt) {
-          const task = app.addTodo.addTask.add();
-
           evt.preventDefault();
-          taskList.appendChild(task);
+          if (input.value === '') {
+            input.classList.add('input-danger');
+            setTimeout(function() {
+              input.classList.remove('input-danger');
+            }, 3000);
+            input.focus();
+            return;
+          }
+          const task = app.addTodo.addTask.add(input.value);
+          const taskInput = app.addTodo.addTask.addtaskInput(input.value);
+          const taskText = app.addTodo.addTask.addEditEvent(task, taskInput);
 
+          app.addTodo.addTask.addBlurEvent(task, taskInput, taskText);
+          app.addTodo.addTask.addEnterEvent(taskInput);
+          app.addTodo.addTask.addDeleteEvent(task, taskList);
+          taskList.appendChild(task);
+          input.value = '';
         });
       },
 
       addTask: {
-        add: function() {
-          const items = this.create();
+        add: function(title) {
+          const items = this.create(title);
           this.setTextIcons(items);
           this.setClass(items);
           this.setAttributes(items);
           return this.append(items);
         },
 
-        create: function() {
-          return {
+        create: function(title) {
+          const todo = {
             'task': document.createElement('div'),
             'clearfix': document.createElement('div'),
             'checkBoxBlock': document.createElement('div'),
@@ -287,6 +308,8 @@
             'taskEditIcon': document.createElement('i'),
             'taskDeleteIcon': document.createElement('i')
           };
+          todo.taskText.textContent = title;
+          return todo;
         },
 
         setClass: function(obj) {
@@ -305,15 +328,15 @@
         },
 
         setAttributes: function(obj) {
-          const { checkBox, taskText } = obj;
+          const { checkBox, toolsBlock } = obj;
 
           checkBox.setAttribute('type', 'checkbox');
-          taskText.textContent = 'hello, this is task';
+          toolsBlock.style.visibility = 'visible';
         },
 
         append: function(obj) {
           const { task, clearfix, checkBoxBlock, checkBox,
-                  taskTextBlock, taskText, toolsBlock,
+                  taskTextBlock, toolsBlock, taskText,
                   arrowsIconBlock, arrowTop, arrowDown,
                   taskEditIconBlock, taskDeleteIconBlock,
                   taskEditIcon, taskDeleteIcon } = obj;
@@ -333,6 +356,68 @@
           task.appendChild(toolsBlock);
 
           return task;
+        },
+
+        toggleVisibilityIcons: function(task) {
+          const toolsBlock = task.querySelector('.toolsBlock');
+          if (toolsBlock.style.visibility === 'hidden') {
+            toolsBlock.style.visibility = 'visible';
+          } else {
+            toolsBlock.style.visibility = 'hidden';
+          }
+        },
+
+        addEnterEvent: function(taskInput) {
+          taskInput.addEventListener('keyup', function(evt) {
+            if (evt.keyCode == 13) {
+              taskInput.blur();
+            }
+          });
+        },
+
+        addBlurEvent: function(task, taskInput, taskText) {
+          const taskTextBlock = task.querySelector('.taskTextBlock');
+          taskInput.addEventListener('blur', function() {
+            if (taskInput.value.replace(/\s/g,"") === '') {
+              taskInput.value = taskText.textContent;
+            } else {
+              taskText.textContent = taskInput.value;
+            }
+            taskTextBlock.removeChild(taskInput);
+            taskTextBlock.appendChild(taskText);
+            app.addTodo.addTask.toggleVisibilityIcons(task);
+          });
+        },
+
+        addEditEvent: function(task, input) {
+          const editIcon = task.querySelector('.taskEditIcon');
+          const taskTextBlock = task.querySelector('.taskTextBlock');
+          const taskText = task.querySelector('.taskText');
+
+          editIcon.addEventListener('click', function() {
+            taskTextBlock.removeChild(taskText);
+            taskTextBlock.appendChild(input);
+            app.addTodo.addTask.toggleVisibilityIcons(task);
+            input.focus();
+          });
+          return taskText;
+        },
+
+        addtaskInput: function(title) {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'text');
+          input.classList.add('taskInput');
+          input.value = title;
+
+          return input;
+        },
+
+        addDeleteEvent: function(task, taskList) {
+          const deleteIcon = task.querySelector('.taskDeleteIcon');
+
+          deleteIcon.addEventListener('click', function() {
+              taskList.removeChild(task);
+          });
         }
       }
     }
