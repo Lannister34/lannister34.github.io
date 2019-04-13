@@ -266,7 +266,7 @@
             input.classList.add('input-danger');
             setTimeout(function() {
               input.classList.remove('input-danger');
-            }, 3000);
+            }, 2000);
             input.focus();
             return;
           }
@@ -277,6 +277,7 @@
           app.addTodo.addTask.addBlurEvent(task, taskInput, taskText);
           app.addTodo.addTask.addEnterEvent(taskInput);
           app.addTodo.addTask.addDeleteEvent(task, taskList);
+          app.addTodo.addTask.addCheckboxEvent(task, taskList);
           taskList.appendChild(task);
           input.value = '';
         });
@@ -401,6 +402,21 @@
             input.focus();
           });
           return taskText;
+        },
+
+        addCheckboxEvent: function(task) {
+          const checkBox = task.querySelector('.checkBox');
+          const taskText = task.querySelector('.taskText');
+          
+          checkBox.addEventListener('change', function() {
+            if (checkBox.checked) {
+              taskText.classList.add('taskText-done');
+            } else {
+              try {
+                taskText.classList.remove('taskText-done');
+              } catch(e) {}
+            }
+          })
         },
 
         addtaskInput: function(title) {

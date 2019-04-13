@@ -320,6 +320,11 @@ body {
   font-weight: bold;
 }
 
+.taskText-done {
+  text-decoration: line-through;
+  color: rgba(3, 130, 54, 0.8);
+}
+
 .taskInput {
   padding: 0;
   background: rgb(255, 255, 255);
