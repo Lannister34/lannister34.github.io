@@ -1,6 +1,4 @@
-"use strict"
-
-  const app = {
+    const app = {
 
     count: 0,
 
@@ -12,14 +10,16 @@
     setBackgroundSize: function() {
         const clientHeight = document.documentElement.clientHeight;
         document.body.style.minHeight = clientHeight - 20 + 'px';
+
         this.addBackgroundResizeEvent();
     },
 
     addBackgroundResizeEvent: function() {
       window.addEventListener('resize', function() {
         const clientHeight = document.documentElement.clientHeight;
-        console.log(clientHeight);
+        const clientWidth = document.documentElement.clientWidth;
         document.body.style.minHeight = clientHeight - 20 + 'px';
+        document.body.style.minWidth = clientWidth + 'px';
 });
     },
 
@@ -130,7 +130,11 @@
 
     addTodo: {
       tasks: {},
-      id: function() { return app.count; },
+
+      id: function() {
+        return app.count;
+      },
+
       add: function() {
         const items = app.addTodo.create();
         app.addTodo.setTextIcons(items);
@@ -237,7 +241,7 @@
       addMouseEvents: function(obj) {
         const { navigation, editIcon, deleteIcon, addTaskButton,
                 editIconBlock, deleteIconBlock, titleBlock,
-                title } = obj;
+                title, taskList } = obj;
 
         navigation.addEventListener('mouseenter', function() {
           editIconBlock.style.opacity = '1';
@@ -249,8 +253,87 @@
         });
 
         addTaskButton.addEventListener('click', function(evt) {
+          const task = app.addTodo.addTask.add();
+
           evt.preventDefault();
+          taskList.appendChild(task);
+
         });
+      },
+
+      addTask: {
+        add: function() {
+          const items = this.create();
+          this.setTextIcons(items);
+          this.setClass(items);
+          this.setAttributes(items);
+          return this.append(items);
+        },
+
+        create: function() {
+          return {
+            'task': document.createElement('div'),
+            'clearfix': document.createElement('div'),
+            'checkBoxBlock': document.createElement('div'),
+            'checkBox': document.createElement('input'),
+            'taskTextBlock': document.createElement('div'),
+            'taskText': document.createElement('span'),
+            'toolsBlock': document.createElement('div'),
+            'arrowsIconBlock': document.createElement('div'),
+            'arrowTop': document.createElement('div'),
+            'arrowDown': document.createElement('div'),
+            'taskEditIconBlock': document.createElement('div'),
+            'taskDeleteIconBlock': document.createElement('div'),
+            'taskEditIcon': document.createElement('i'),
+            'taskDeleteIcon': document.createElement('i')
+          };
+        },
+
+        setClass: function(obj) {
+          for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              obj[key].classList.add(key);
+            }
+          }
+        },
+
+        setTextIcons: function(obj) {
+          const { taskEditIcon, taskDeleteIcon } = obj;
+
+          taskEditIcon.className = 'fas fa-pencil-alt fa-ms';
+          taskDeleteIcon.className = 'far fa-trash-alt fa-ms';
+        },
+
+        setAttributes: function(obj) {
+          const { checkBox, taskText } = obj;
+
+          checkBox.setAttribute('type', 'checkbox');
+          taskText.textContent = 'hello, this is task';
+        },
+
+        append: function(obj) {
+          const { task, clearfix, checkBoxBlock, checkBox,
+                  taskTextBlock, taskText, toolsBlock,
+                  arrowsIconBlock, arrowTop, arrowDown,
+                  taskEditIconBlock, taskDeleteIconBlock,
+                  taskEditIcon, taskDeleteIcon } = obj;
+
+          checkBoxBlock.appendChild(clearfix);
+          checkBoxBlock.appendChild(checkBox);
+          taskTextBlock.appendChild(taskText);
+          arrowsIconBlock.appendChild(arrowTop);
+          arrowsIconBlock.appendChild(arrowDown);
+          taskEditIconBlock.appendChild(taskEditIcon);
+          taskDeleteIconBlock.appendChild(taskDeleteIcon);
+          toolsBlock.appendChild(arrowsIconBlock);
+          toolsBlock.appendChild(taskEditIconBlock);
+          toolsBlock.appendChild(taskDeleteIconBlock);
+          task.appendChild(checkBoxBlock);
+          task.appendChild(taskTextBlock);
+          task.appendChild(toolsBlock);
+
+          return task;
+        }
       }
     }
   }
